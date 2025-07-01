@@ -14,25 +14,18 @@ export default function ProductDetails() {
     let[isLoading,setLoading]=useState(true)
     let [data, setData] = useState([])
     let { productId } = useParams()
-    console.log(productId);
-
     async function addProduct() {
         setLoading(false)
         let  data  = await addToCart(productId)
         if (data.status === "success") {
-            console.log(data.message);
             setCartCounter(data.numOfCartItems)
             toast.success("Product Added Successfully")
             setLoading(true)
         }
-        
-        
-        
     }
 
     async function getData() {
         let { data } = await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${productId}`)
-        console.log(data.data);
 
         setData(data.data)
     }

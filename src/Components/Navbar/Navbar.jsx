@@ -1,47 +1,48 @@
 import { Navigate, NavLink, useNavigate } from "react-router-dom"
 import logo from "../../assets/images/freshcart-logo.svg"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { FavContext } from "../../Context/FavContext"
 import { CartContext } from "../../Context/CartContext"
 import { toast } from "react-toastify"
 
 export default function Navbar() {
-    let { cartCounter, getCart,setCartCounter} = useContext(CartContext)
-    let { favCounter,setFavCounter,getWishListItems } = useContext(FavContext)
-    const navigate=useNavigate()
+    let { cartCounter, getCart, setCartCounter } = useContext(CartContext)
+    let { favCounter, setFavCounter, getWishListItems } = useContext(FavContext)
+    let [user, setUser] = useState(!!localStorage.getItem("token"))
+    const navigate = useNavigate()
 
     // async function fetchData() {
     //     let data  = await getCart()
     //     console.log(data);
     //     setCartCounter(data.numOfCartItems)
-        
+
     // }
     // useEffect(() => {
     //     fetchData()
     // }, [])
+    
+    function signOut() {
 
-    // function signOut() {
-        
-    //     localStorage.removeItem("token")
-    //     setCartCounter(0)
-    //     setFavCounter(0)
-    //     navigate("/signin")
-    //     toast.success("You signed out")
-    // }
+        localStorage.removeItem("token")
+        setCartCounter(0)
+        setFavCounter(0)
+        navigate("/signin")
+        toast.success("You signed out")
+    }
     async function fetchData() {
-        if (!localStorage.getItem("token")) return;
-        let  data  = await getCart()
-        console.log(data.numOfCartItems);
+        try {
+            if (!localStorage.getItem("token")) return;
+        let data = await getCart()
         setCartCounter(data.numOfCartItems)
         let response = await getWishListItems()
         setFavCounter(response.data.length);
-
-        
-        
+        } catch (error) {
+            toast.error(error)
+        }
     }
     useEffect(() => {
-    fetchData()
-},[])
+        fetchData()
+    }, [])
     return <>
 
         <nav className="navbar navbar-expand-lg bg-main-light sticky-top">
@@ -68,26 +69,34 @@ export default function Navbar() {
                     </ul>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <NavLink className="nav-link position-relative" to="/Cart">Cart
+                            {user?<NavLink className="nav-link position-relative" to="/Cart">Cart
                                 <i className="fa-solid fa-cart-shopping ms-1"></i>
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {cartCounter}
                                     <span className="visually-hidden">unread messages</span>
                                 </span>
-                            </NavLink>
+                            </NavLink>:null}
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link position-relative mx-2" to="/WishList">WishList
+                            {user?<NavLink className="nav-link position-relative mx-2" to="/WishList">WishList
                                 <i className="fa-solid fa-heart ms-1"></i>
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {favCounter}
                                     <span className="visually-hidden">unread messages</span>
                                 </span>
-                            </NavLink>
+                            </NavLink>:null}
                         </li>
                         <li className="nav-item">
-                            <span className="nav-link btn">SignOut
-                            </span>
+                            {user?<span className="nav-link btn" onClick={signOut}>SignOut
+                            </span>:null}
+                        </li>
+                        <li className="nav-item">
+                            {!user?<NavLink className="nav-link btn" to={"/signin"}>Sign In
+                            </NavLink>:null}
+                        </li>
+                        <li className="nav-item">
+                            {!user?<NavLink className="nav-link btn" to={"/signup"}>Sign Up
+                            </NavLink>:null}
                         </li>
                     </ul>
                 </div>

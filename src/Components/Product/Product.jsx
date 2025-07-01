@@ -26,13 +26,16 @@ export default function Product(props) {
     async function addProduct() {
         setLoading(false)
         let data = await addToCart(props.val._id)
-
-        if (data.status === "success") {
-            console.log(data.message);
+        try {
+            if (data.status === "success") {
             setCartCounter(data.numOfCartItems)
             toast.success("Product Added Successfully")
+        }
+        } catch (error) {
+            toast.error("you need to log in")
             setLoading(true)
         }
+        
 
 
 
@@ -41,31 +44,29 @@ export default function Product(props) {
     async function addProductToFav() {
         try {
             let data = await addToWishList(props.val._id)
-            console.log(data.message);
             toast.success(data.message)
             setFavCounter(data.data.length)
             setLoved(true)
         } catch (error) {
-
+            toast.error("you need to log in")
         }
 
     }
     async function deleteItemFromWishList() {
         try {
             let data = await deleteFromWishList(props.val._id)
-            console.log(data);
             toast.success(data.message)
             setFavCounter(data.data.length)
             setLoved(false)
         } catch (error) {
-            console.log(error);
+            toast.error(error)
             
         }
         
     }
     return <>
 
-        <div className="col-3 g-5">
+        <div className="col-md-3  g-5">
             <div className=" product shadow-sm border border-light rounded-4 p-3 cursor-pointer h-100"  >
                 <Link to={"/product-details/" + props.val._id}>
                     <img src={props.val.imageCover} className="w-100" alt="..." />

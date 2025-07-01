@@ -14,14 +14,12 @@ export default function Cart() {
     async function fetchData() {
         setLoading(true)
         let { data } = await getCart()
-        console.log(data);
         setCartItem(data)
         setLoading(false)
 
     }
     async function deleteSpecificItem(id) {
         let data = await deleteItem(id)
-        console.log(data);
         if (data.status === "success") {
             toast.error("Product Deleted Successfully")
             setCartItem(data.data)
@@ -34,7 +32,7 @@ export default function Cart() {
 
         try {
             let { data } = await axios.delete("https://ecommerce.routemisr.com/api/v1/cart", { headers: { token: localStorage.getItem("token") } })
-            console.log(data);
+
             if (data.message === "success") {
                 toast.error("Cart Deleted Successfully")
                 setCartItem({ products: [], totalCartPrice: 0 })
@@ -48,7 +46,6 @@ export default function Cart() {
     }
     async function updateItem(productId, count) {
         let data = await updateProduct(productId, count);
-        console.log(data.data);
         setCartItem(data.data)
         toast.success("Product is Updated Successfully")
 
@@ -93,7 +90,7 @@ export default function Cart() {
                 </div>
             </div>
             {cartItem.products.map(val =>
-                <div className="row border-bottom shadow-sm border border-light rounded-4 p-3 my-4">
+                <div key={val._id} className="row border-bottom shadow-sm border border-light rounded-4 p-3 my-4">
                     <div className="col-1 my-2">
                         <img src={val.product.imageCover} className="w-100 " alt="" />
                     </div>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useState } from "react";
+import { toast } from "react-toastify";
 
 export let FavContext = createContext(0)
 async function addToWishList(productId) {
@@ -11,10 +12,10 @@ async function addToWishList(productId) {
             token:localStorage.getItem("token")
         }}
         )
-        console.log(data);
+        
         return data
     } catch (error) {
-        console.log(error);
+        toast.error(error)
         
     }
 
@@ -28,10 +29,10 @@ async function deleteFromWishList(productId) {
             }
         }
     )
-    console.log(data);
+    
     return data;
     } catch (error) {
-        console.log(error);
+        toast.error(error)
         
     }
 }
@@ -42,7 +43,7 @@ async function getWishListItems() {
                 { headers: { token: localStorage.getItem("token") } })
             return data;
         } catch (error) {
-            console.log(error);
+            toast.error(error)
 
         }
     }

@@ -2,6 +2,7 @@ import axios from "axios"
 import { useFormik } from "formik"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import * as yup from "yup"
 
 export default function SignIn() {
@@ -22,11 +23,9 @@ export default function SignIn() {
         setLoading(true)
         try {
             let { data } = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin", values)
-            console.log(data);
+            toast.success("Successfully logged in")
             navigate("/home")
             localStorage.setItem("token",data.token)
-
-
         } catch (error) {
             setError(error.response.data.message)
         }

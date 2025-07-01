@@ -11,7 +11,6 @@ export default function Address() {
     let { setCartCounter } = useContext(CartContext)
     let [isLoading, setLoading] = useState(false)
     let[paymentMethod,setPaymentMethod]=useState("cash")
-    console.log(id);
 
     async function sendCashData(id, values) {
         setLoading(true)
@@ -23,10 +22,7 @@ export default function Address() {
             toast.success("your order placed successfully")
             address.resetForm()
             setLoading(false)
-
-
         } catch (error) {
-            console.log(error);
             setLoading(false)
             toast.error("something went wrong")
             address.resetForm()
@@ -38,8 +34,6 @@ export default function Address() {
             let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}`,
                 { shippingAddress: values },
                 { headers: { token: localStorage.getItem("token") } })
-            console.log(data);
-
             setCartCounter(0)
             toast.success("your order placed successfully")
             address.resetForm()
@@ -47,9 +41,7 @@ export default function Address() {
             if (data.status == "success") {
                 window.location.href = data.session.url
             }
-
         } catch (error) {
-            console.log(error);
             setLoading(false)
             toast.error("something went wrong")
             address.resetForm()

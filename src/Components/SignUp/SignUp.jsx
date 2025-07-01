@@ -2,6 +2,7 @@ import axios from "axios"
 import { useFormik } from "formik"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import * as yup from "yup"
 
 export default function SignUp() {
@@ -37,11 +38,9 @@ export default function SignUp() {
         setLoading(true)
         try {
             let { data } = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup", values)
+            toast.success("account created successfully")
             navigate("/signin")
-            console.log(data);
-
         } catch (error) {
-            console.log(error.response.data.message)
             setError(error.response.data.message)
         }
         setLoading(false)
