@@ -31,9 +31,15 @@ export default function Address() {
     async function sendVidsData(id, values) {
         setLoading(true)
         try {
+            const currentAppUrl = window.location.origin;
             let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${id}`,
                 { shippingAddress: values },
-                { headers: { token: localStorage.getItem("token") } })
+                {
+                    headers: {
+                        token: localStorage.getItem("token"),
+                        params: url = currentAppUrl
+                    }
+                })
             setCartCounter(0)
             toast.success("your order placed successfully")
             address.resetForm()
