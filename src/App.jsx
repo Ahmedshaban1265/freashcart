@@ -21,6 +21,7 @@ import FavContextProvider from "./Context/FavContext"
 import { ToastContainer } from 'react-toastify';
 import Footer from "./Components/Footer/Footer"
 import Address from "./Components/Address/Address"
+import AllOrders from "./Components/AllOrders/AllOrders"
 
 
 
@@ -36,6 +37,7 @@ export default function App() {
       { path: 'WishList', element: <ProtectedRoutes><WishList /></ProtectedRoutes> },
       { path: 'product-details/:productId', element: <ProtectedRoutes><ProductDetails /></ProtectedRoutes> },
       { path: 'address/:id', element: <ProtectedRoutes><Address /></ProtectedRoutes> },
+      { path: 'allorders', element: <ProtectedRoutes><AllOrders /></ProtectedRoutes> },
       { path: '*', element: <NotFound /> }
     ]
   },

@@ -25,7 +25,8 @@ export default function SignIn() {
             let { data } = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin", values)
             toast.success("Successfully logged in")
             navigate("/home")
-            localStorage.setItem("token",data.token)
+            localStorage.setItem("token", data.token)
+            localStorage.setItem("userData", JSON.stringify(data.user))
         } catch (error) {
             setError(error.response.data.message)
         }

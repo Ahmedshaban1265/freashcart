@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../Context/CartContext";
 import { FavContext } from "../../Context/FavContext";
@@ -8,7 +8,7 @@ import axios from "axios";
 
 export default function Product(props) {
     let { cartCounter, setCartCounter, addToCart } = useContext(CartContext)
-    let { favCounter, setFavCounter, addToWishList,deleteFromWishList } = useContext(FavContext)
+    let { favCounter, setFavCounter, addToWishList,deleteFromWishList ,getWishListItems} = useContext(FavContext)
     let [isLoading, setLoading] = useState(true)
     let[loved,setLoved]=useState(false)
     // async function addProduct() {
@@ -22,7 +22,18 @@ export default function Product(props) {
     //         setLoading(true)
     //     }
     // }
-
+async function checkIfLoved() {
+        try {
+            const data = await getWishListItems();
+            if (data?.data?.some(item => item._id === props.val._id)) {
+                setLoved(true);
+            } else {
+                setLoved(false);
+            }
+        } catch (error) {
+            console.error("Error checking wishlist item:", error);
+        }
+    }
     async function addProduct() {
         setLoading(false)
         let data = await addToCart(props.val._id)
@@ -64,6 +75,9 @@ export default function Product(props) {
         }
         
     }
+    useEffect(() => {
+        checkIfLoved()
+    },[])
     return <>
 
         <div className="col-md-3  g-5">

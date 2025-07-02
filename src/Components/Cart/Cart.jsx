@@ -86,6 +86,7 @@ export default function Cart() {
                 </div>
                 <div className="right-sec">
                     <Link to={`/address/${cartItem._id}`} className="btn btn bg-main my-3 mx-2 text-white">Place Your Order</Link>
+                <Link className="btn btn-primary mx-2" to={"/allorders"}>All Orders</Link>
                     <button onClick={deleteCart} className="btn btn-danger">Remove <i class="fa-solid fa-trash"></i></button>
                 </div>
             </div>
