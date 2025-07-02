@@ -65,6 +65,7 @@ export default function Cart() {
                         <h3>Shop Cart :</h3>
                     </div>
                     <div className="right-sec">
+                <Link className="btn btn-primary mx-2" to={"/allorders"}>All Orders</Link>
                         <button onClick={deleteCart} disabled className="btn btn-danger">Remove <i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>

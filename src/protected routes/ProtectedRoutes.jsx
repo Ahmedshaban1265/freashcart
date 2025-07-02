@@ -8,7 +8,6 @@ export default function ProtectedRoutes({children}) {
     }
     try {
         let decoded = jwtDecode(token)
-        console.log(decoded);
         return children
     } catch (error) {
         localStorage.removeItem("token")
