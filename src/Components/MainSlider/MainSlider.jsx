@@ -19,14 +19,14 @@ export default function MainSlider() {
     };
     return (
         <div className="m-5 d-flex justify-content-center align-items-center">
-            <div className="w-75 ">
+            <div className="col-12 col-md-9">
                 <Slider {...settings}>
                     <img src={slide1} alt="" className="w-100" height={450} />
                     <img src={slide2} alt="" className="w-100" height={450} />
                     <img src={slide3} alt="" className="w-100" height={450} />
                 </Slider>
             </div>
-            <div className="w-25">
+            <div className={`col-md-3 d-none d-md-block`}>
                 <img src={slide1} className="w-100" height={225} alt="" />
                 <img src={slide3} className="w-100" height={225} alt="" />
             </div>

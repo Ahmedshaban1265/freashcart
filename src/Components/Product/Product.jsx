@@ -81,7 +81,7 @@ export default function Product(props) {
     }, [])
     return <>
 
-        <div className="col-md-3  g-5">
+        <div className=" col-md-6 col-lg-3 col-sm-12 g-5">
             <div className=" product shadow-sm border border-light rounded-4 p-3 cursor-pointer h-100"  >
                 <Link to={"/product-details/" + props.val._id}>
                     <img src={props.val.imageCover} className="w-100" alt="..." />

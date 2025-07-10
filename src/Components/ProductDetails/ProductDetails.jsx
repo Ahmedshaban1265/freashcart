@@ -71,9 +71,9 @@ export default function ProductDetails() {
 
     };
 
-    return <div className="container">
-        <div className="d-flex m-5 mx-5">
-            <div className="product-imgs w-25 g-3">
+    return <div className="container-md ">
+        <div className="d-flex my-5 mx-4">
+            <div className="product-imgs  w-25 g-3">
                 <Slider {...settings}>
                     {data.images?.map(img =>
                         <img src={img} className="w-100" />
@@ -81,15 +81,16 @@ export default function ProductDetails() {
                 </Slider>
             </div>
             <div className="product-details w-75 d-flex flex-column justify-content-center ps-5">
-                <h5>{data.description}</h5>
+                    <h5>{data.description}</h5>
                 <p className="text-light-emphasis">{data.title}</p>
+                
 
-                <div className="d-flex justify-content-between my-3">
+                <div className="d-flex justify-content-between align-items-center my-3">
                     <h5 className="price">{data.price} EGP</h5>
                     <h6><i className="fa-solid fa-star rating-color"></i> {data.ratingsAverage}</h6>
                 </div>
 
-                <div className="d-flex justify-content-between mt-3">
+                <div className="d-flex justify-content-between  align-items-center mt-3">
                     <button disabled={!isLoading} onClick={addProduct} className="btn bg-main text-white product-btn w-75">+ Add To Cart</button>
                     <a onClick={addProductTOWishList}><i className={`${loved ? "fa-solid" : "fa-regular"} fa-heart love-icon   cursor-pointer`} ></i></a>
                 </div>

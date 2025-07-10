@@ -70,10 +70,10 @@ export default function WishList() {
             <h2>Wish List:</h2>
             {wishList.map(val =>
                 <div key={val._id} className="row shadow-sm border border-light rounded-4 p-3 my-4">
-                    <div className="col-1">
+                    <div className="col-2 col-lg-1">
                         <img src={val.imageCover} className="w-100" alt="" />
                     </div>
-                    <div className="col-11 d-flex justify-content-between">
+                    <div className="col-10 col-lg-11 d-flex justify-content-between">
                         <div className="d-flex justify-content-center flex-column">
                             <p className="text-main p-0 m-0">Price : {val.price}EGP</p>
                             <button onClick={() => deleteItemFromWishList(val._id)} className="btn text-danger border-0 p-0 m-0">
