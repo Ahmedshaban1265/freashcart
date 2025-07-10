@@ -46,7 +46,7 @@ export default function Navbar() {
     return <>
 
         <nav className="navbar navbar-expand-lg bg-main-light sticky-top">
-            <div className="container-fluid px-5 py-1">
+            <div className="container-fluid  px-5 py-1">
                 <NavLink className="navbar-brand" to="/home"><img className="w-100" src={logo} alt="" /></NavLink>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon" />
@@ -69,7 +69,7 @@ export default function Navbar() {
                     </ul>
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                            {user?<NavLink className="nav-link position-relative" to="/Cart">Cart
+                            {user?<NavLink className="nav-link position-relative d-flex  align-items-center" to="/Cart">Cart
                                 <i className="fa-solid fa-cart-shopping ms-1"></i>
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {cartCounter}
@@ -78,7 +78,7 @@ export default function Navbar() {
                             </NavLink>:null}
                         </li>
                         <li className="nav-item">
-                            {user?<NavLink className="nav-link position-relative mx-2" to="/WishList">WishList
+                            {user?<NavLink className="nav-link position-relative  d-flex  align-items-center" to="/WishList">WishList
                                 <i className="fa-solid fa-heart ms-1"></i>
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     {favCounter}
@@ -87,7 +87,7 @@ export default function Navbar() {
                             </NavLink>:null}
                         </li>
                         <li className="nav-item">
-                            {user?<span className="nav-link btn" onClick={signOut}>SignOut
+                            {user?<span className="nav-link btn d-flex  align-items-center" onClick={signOut}>SignOut
                             </span>:null}
                         </li>
                         <li className="nav-item">
