@@ -8,9 +8,9 @@ import axios from "axios";
 
 export default function Product(props) {
     let { cartCounter, setCartCounter, addToCart } = useContext(CartContext)
-    let { favCounter, setFavCounter, addToWishList,deleteFromWishList ,getWishListItems} = useContext(FavContext)
+    let { favCounter, setFavCounter, addToWishList, deleteFromWishList, getWishListItems } = useContext(FavContext)
     let [isLoading, setLoading] = useState(true)
-    let[loved,setLoved]=useState(false)
+    let [loved, setLoved] = useState(false)
     // async function addProduct() {
     //     setLoading(false)
     //     let { data } = await addToCart(props.val._id)
@@ -22,7 +22,7 @@ export default function Product(props) {
     //         setLoading(true)
     //     }
     // }
-async function checkIfLoved() {
+    async function checkIfLoved() {
         try {
             const data = await getWishListItems();
             if (data?.data?.some(item => item._id === props.val._id)) {
@@ -39,14 +39,15 @@ async function checkIfLoved() {
         let data = await addToCart(props.val._id)
         try {
             if (data.status === "success") {
-            setCartCounter(data.numOfCartItems)
-            toast.success("Product Added Successfully")
-        }
+                setCartCounter(data.numOfCartItems)
+                toast.success("Product Added Successfully")
+                setLoading(true)
+            }
         } catch (error) {
             toast.error("you need to log in")
             setLoading(true)
         }
-        
+
 
 
 
@@ -71,13 +72,13 @@ async function checkIfLoved() {
             setLoved(false)
         } catch (error) {
             toast.error(error)
-            
+
         }
-        
+
     }
     useEffect(() => {
         checkIfLoved()
-    },[])
+    }, [])
     return <>
 
         <div className="col-md-3  g-5">
@@ -104,7 +105,7 @@ async function checkIfLoved() {
                             )}
                     </button>
 
-                    {loved?<span onClick={deleteItemFromWishList}><i className="fa-solid fa-heart love-icon" ></i></span>:<span onClick={addProductToFav} ><i className="fa-regular fa-heart love-icon" ></i></span>}
+                    {loved ? <span onClick={deleteItemFromWishList}><i className="fa-solid fa-heart love-icon" ></i></span> : <span onClick={addProductToFav} ><i className="fa-regular fa-heart love-icon" ></i></span>}
                 </div>
             </div>
         </div>

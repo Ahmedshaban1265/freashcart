@@ -2,21 +2,22 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Slider from "react-slick"
-import {  CartContext } from "../../Context/CartContext"
+import { CartContext } from "../../Context/CartContext"
 import { FavContext } from "../../Context/FavContext"
 import { toast } from "react-toastify"
 
 
 export default function ProductDetails() {
-    let { cartCounter, setCartCounter,addToCart } = useContext(CartContext)
-    let {favCounter,setFavCounter }=useContext(FavContext)
-    
-    let[isLoading,setLoading]=useState(true)
+    let { cartCounter, setCartCounter, addToCart } = useContext(CartContext)
+    let { favCounter, setFavCounter, addToWishList, getWishListItems } = useContext(FavContext)
+    let [isLoading, setLoading] = useState(true)
+    let [loved, setLoved] = useState(false)
     let [data, setData] = useState([])
     let { productId } = useParams()
+
     async function addProduct() {
         setLoading(false)
-        let  data  = await addToCart(productId)
+        let data = await addToCart(productId)
         if (data.status === "success") {
             setCartCounter(data.numOfCartItems)
             toast.success("Product Added Successfully")
@@ -24,17 +25,40 @@ export default function ProductDetails() {
         }
     }
 
+    async function addProductTOWishList() {
+        setLoved(false)
+        let data = await addToWishList(productId)
+        if (data.status === "success") {
+            setFavCounter(data.data.length)
+            console.log(data.data.length);
+            setLoved(true)
+            toast.success("Product Added Successfully")
+
+        }
+    }
+    async function getWishList() {
+        let data = await getWishListItems();
+
+        if (data?.data?.some(product => product._id === productId)) {
+            setLoved(true);
+        } else {
+            setLoved(false);
+        }
+    }
+
+
+
+
     async function getData() {
         let { data } = await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${productId}`)
 
         setData(data.data)
     }
     useEffect(() => {
-        getData()
+        getData();
+        getWishList();
     }, [])
-    useEffect(() => {
-    addProduct()
-},[])
+
     var settings = {
         dots: true,
         infinite: true,
@@ -66,8 +90,8 @@ export default function ProductDetails() {
                 </div>
 
                 <div className="d-flex justify-content-between mt-3">
-                    <a onClick={addProduct} className="btn bg-main text-white product-btn w-75">+ Add To Cart</a>
-                    <a onClick={()=>setFavCounter(favCounter+1)}><i className="fa-regular fa-heart love-icon cursor-pointer" ></i></a>
+                    <button disabled={!isLoading} onClick={addProduct} className="btn bg-main text-white product-btn w-75">+ Add To Cart</button>
+                    <a onClick={addProductTOWishList}><i className={`${loved ? "fa-solid" : "fa-regular"} fa-heart love-icon   cursor-pointer`} ></i></a>
                 </div>
 
             </div>
