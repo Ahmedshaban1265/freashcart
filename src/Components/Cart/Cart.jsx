@@ -80,13 +80,13 @@ export default function Cart() {
 
 
         <div className="container my-3 p-3">
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex justify-content-between align-items-center ">
                 <div className="left-sec">
                     <h3 className="p-0 m-0">Shop Cart :</h3>
                     <p className="p-0 m-0 text-main">Total Cart Price : {cartItem.totalCartPrice} EGP</p>
                 </div>
-                <div className="right-sec d-flex align-items-center gap-2">
-                    <Link to={`/address/${cartItem._id}`} className="btn btn bg-main my-3  text-white">Place Your Order</Link>
+                <div className="right-sec d-flex align-items-center gap-2 ">
+                    <Link to={`/address/${cartItem._id}`} className="btn btn bg-main  text-white">Place Order</Link>
                     <Link className="btn btn-primary " to={"/allorders"}>All Orders</Link>
                     <button onClick={deleteCart} className="btn btn-danger">Remove <i class="fa-solid fa-trash"></i></button>
                 </div>
